@@ -1,0 +1,1043 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sammy Linn — Filmmaker</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --ink: #000000;
+    --cream: #ffffff;
+    --gold: #ffffff;
+    --rust: #ffffff;
+    --mist: #888888;
+    --paper: #f0f0f0;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--ink);
+    color: var(--cream);
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    overflow-x: hidden;
+    cursor: default;
+  }
+
+  /* GRAIN OVERLAY */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 1000;
+    opacity: 0.35;
+  }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    position: relative;
+    overflow: hidden;
+    padding: 0 clamp(24px, 5vw, 80px);
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 80% 60% at 65% 40%, #1a1a1a 0%, #000000 70%);
+    z-index: 0;
+  }
+
+  .hero-bg::after {
+    content: '';
+    position: absolute;
+    top: -20%;
+    right: -10%;
+    width: 700px;
+    height: 700px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255,255,255,0.05) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  /* FILMSTRIP DECORATION */
+  .filmstrip {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 28px;
+    background: #111008;
+    border-right: 1px solid rgba(255,255,255,0.15);
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 16px 0;
+    overflow: hidden;
+    z-index: 2;
+  }
+
+  .filmstrip span {
+    display: block;
+    width: 16px;
+    height: 10px;
+    background: var(--ink);
+    border: 1px solid rgba(255,255,255,0.25);
+    border-radius: 2px;
+    margin: 0 auto;
+    animation: filmroll 8s linear infinite;
+  }
+
+  @keyframes filmroll {
+    from { transform: translateY(0); }
+    to { transform: translateY(-240px); }
+  }
+
+  .nav {
+    position: relative;
+    z-index: 10;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 32px 0 32px 40px;
+    opacity: 0;
+    animation: fadeUp 1s 0.2s forwards;
+  }
+
+  .nav-logo {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 40px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--mist);
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+
+  .nav-links a:hover { color: var(--cream); }
+
+  .hero-content {
+    position: relative;
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 0 0 60px 40px;
+    opacity: 0;
+    animation: fadeUp 1.2s 0.5s forwards;
+  }
+
+  .hero-eyebrow {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .hero-eyebrow::before {
+    content: '';
+    display: block;
+    width: 40px;
+    height: 1px;
+    background: var(--gold);
+  }
+
+  .hero-name {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(72px, 12vw, 180px);
+    font-weight: 900;
+    line-height: 0.88;
+    letter-spacing: -0.02em;
+    color: var(--cream);
+    margin-bottom: 8px;
+  }
+
+  .hero-name span {
+    display: block;
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(242,237,228,0.3);
+    font-style: italic;
+    font-size: 0.65em;
+    margin-left: 0.15em;
+  }
+
+  .hero-roles {
+    margin-top: 40px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    max-width: 600px;
+  }
+
+  .role-tag {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    padding: 6px 14px;
+    border: 1px solid rgba(255,255,255,0.3);
+    color: var(--mist);
+    transition: all 0.3s;
+  }
+
+  .role-tag:hover {
+    border-color: #ffffff;
+    color: #ffffff;
+    background: rgba(255,255,255,0.05);
+  }
+
+  .hero-scroll {
+    position: relative;
+    z-index: 10;
+    padding: 32px 0 48px 40px;
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.3em;
+    color: var(--mist);
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    opacity: 0;
+    animation: fadeUp 1s 1s forwards;
+  }
+
+  .scroll-line {
+    width: 60px;
+    height: 1px;
+    background: var(--mist);
+    animation: scrollPulse 2s ease-in-out infinite;
+  }
+
+  @keyframes scrollPulse {
+    0%, 100% { opacity: 0.3; width: 60px; }
+    50% { opacity: 1; width: 80px; }
+  }
+
+  /* ABOUT */
+  .about {
+    background: var(--cream);
+    color: var(--ink);
+    padding: clamp(80px, 12vw, 160px) clamp(24px, 8vw, 120px);
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 80px;
+    align-items: start;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .about::before {
+    content: '"';
+    font-family: 'Playfair Display', serif;
+    font-size: 400px;
+    font-weight: 900;
+    color: rgba(13,12,10,0.04);
+    position: absolute;
+    top: -60px;
+    right: 60px;
+    line-height: 1;
+    pointer-events: none;
+  }
+
+  .about-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--mist);
+    margin-bottom: 24px;
+  }
+
+  .about-stat-block {
+    position: sticky;
+    top: 80px;
+  }
+
+  .stat {
+    margin-bottom: 48px;
+  }
+
+  .stat-number {
+    font-family: 'Playfair Display', serif;
+    font-size: 56px;
+    font-weight: 900;
+    color: var(--ink);
+    line-height: 1;
+  }
+
+  .stat-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--mist);
+    margin-top: 6px;
+  }
+
+  .about-text h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(32px, 4vw, 52px);
+    font-weight: 700;
+    line-height: 1.15;
+    margin-bottom: 32px;
+    color: var(--ink);
+  }
+
+  .about-text p {
+    font-size: clamp(16px, 1.5vw, 20px);
+    line-height: 1.85;
+    color: #333333;
+    margin-bottom: 24px;
+    max-width: 640px;
+  }
+
+  .langs {
+    display: flex;
+    gap: 16px;
+    margin-top: 40px;
+    flex-wrap: wrap;
+  }
+
+  .lang {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    padding: 8px 18px;
+    border: 1px solid rgba(13,12,10,0.2);
+    color: var(--ink);
+  }
+
+  /* WORK */
+  .work {
+    background: var(--ink);
+    padding: clamp(80px, 12vw, 160px) clamp(24px, 8vw, 120px);
+  }
+
+  .section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 80px;
+    border-bottom: 1px solid rgba(255,255,255,0.2);
+    padding-bottom: 24px;
+  }
+
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(40px, 6vw, 80px);
+    font-weight: 900;
+    font-style: italic;
+    color: var(--cream);
+  }
+
+  .section-count {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.3em;
+    color: var(--mist);
+  }
+
+  .projects-grid {
+    display: grid;
+    gap: 0;
+  }
+
+  .project {
+    display: grid;
+    grid-template-columns: 80px 1fr auto;
+    gap: 40px;
+    align-items: start;
+    padding: 40px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    transition: all 0.4s;
+    cursor: default;
+  }
+
+  .project:hover {
+    background: rgba(255,255,255,0.03);
+    padding-left: 24px;
+    margin: 0 -24px;
+    padding-right: 24px;
+  }
+
+  .project:hover .project-num { color: var(--gold); }
+
+  .project-num {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    color: rgba(138,128,112,0.4);
+    padding-top: 6px;
+    transition: color 0.4s;
+  }
+
+  .project-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(22px, 2.5vw, 32px);
+    font-weight: 700;
+    color: var(--cream);
+    margin-bottom: 8px;
+    line-height: 1.2;
+  }
+
+  .project-meta {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    margin-bottom: 12px;
+  }
+
+  .project-type {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+
+  .project-year {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.25em;
+    color: var(--mist);
+  }
+
+  .project-desc {
+    font-size: 15px;
+    line-height: 1.7;
+    color: var(--mist);
+    max-width: 560px;
+  }
+
+  .project-roles {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    align-items: flex-end;
+    padding-top: 4px;
+    min-width: 140px;
+  }
+
+  .project-role {
+    font-family: 'Space Mono', monospace;
+    font-size: 8px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(138,128,112,0.6);
+    white-space: nowrap;
+  }
+
+  /* FEATURED PROJECT */
+  .featured {
+    background: linear-gradient(135deg, #1a1a1a 0%, #000000 50%);
+    border: 1px solid rgba(255,255,255,0.15);
+    padding: clamp(48px, 6vw, 80px);
+    margin-bottom: 0;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .featured::before {
+    content: 'FEATURED';
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.4em;
+    color: var(--gold);
+    position: absolute;
+    top: 28px;
+    right: 32px;
+  }
+
+  .featured-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    margin-top: 40px;
+  }
+
+  .featured-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(36px, 5vw, 64px);
+    font-weight: 900;
+    color: var(--cream);
+    line-height: 1.05;
+    margin-bottom: 16px;
+  }
+
+  .featured-subtitle {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 28px;
+  }
+
+  .featured-desc {
+    font-size: clamp(15px, 1.4vw, 18px);
+    line-height: 1.85;
+    color: var(--mist);
+  }
+
+  .award-block {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.2);
+    padding: 32px;
+    margin-top: 32px;
+  }
+
+  .award-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 8px;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 12px;
+  }
+
+  .award-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 18px;
+    color: var(--cream);
+    line-height: 1.5;
+  }
+
+  .facts-list {
+    list-style: none;
+    margin-top: 16px;
+  }
+
+  .facts-list li {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    color: var(--mist);
+    padding: 12px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    display: flex;
+    gap: 16px;
+    align-items: center;
+  }
+
+  .facts-list li::before {
+    content: '→';
+    color: var(--gold);
+    font-size: 12px;
+  }
+
+  /* SKILLS */
+  .skills {
+    background: var(--paper);
+    color: var(--ink);
+    padding: clamp(80px, 12vw, 160px) clamp(24px, 8vw, 120px);
+  }
+
+  .skills .section-title { color: var(--ink); }
+  .skills .section-count { color: var(--mist); }
+  .skills .section-header { border-bottom-color: rgba(13,12,10,0.12); }
+
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 2px;
+  }
+
+  .skill-card {
+    background: rgba(13,12,10,0.04);
+    padding: 40px 32px;
+    transition: background 0.3s;
+  }
+
+  .skill-card:hover { background: rgba(13,12,10,0.08); }
+
+  .skill-icon {
+    font-family: 'Playfair Display', serif;
+    font-size: 42px;
+    font-weight: 900;
+    font-style: italic;
+    color: var(--ink);
+    opacity: 0.15;
+    line-height: 1;
+    margin-bottom: 20px;
+  }
+
+  .skill-name {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--ink);
+    margin-bottom: 12px;
+  }
+
+  .skill-desc {
+    font-size: 14px;
+    line-height: 1.7;
+    color: #444444;
+  }
+
+  /* CONTACT */
+  .contact {
+    background: var(--ink);
+    padding: clamp(80px, 14vw, 180px) clamp(24px, 8vw, 120px);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .contact::before {
+    content: 'LINN';
+    font-family: 'Playfair Display', serif;
+    font-size: min(30vw, 320px);
+    font-weight: 900;
+    color: rgba(255,255,255,0.02);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    white-space: nowrap;
+    pointer-events: none;
+  }
+
+  .contact-eyebrow {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 32px;
+    position: relative;
+  }
+
+  .contact h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(40px, 7vw, 100px);
+    font-weight: 900;
+    font-style: italic;
+    color: var(--cream);
+    line-height: 1.05;
+    margin-bottom: 48px;
+    position: relative;
+  }
+
+  .contact-info {
+    display: flex;
+    justify-content: center;
+    gap: 48px;
+    flex-wrap: wrap;
+    position: relative;
+  }
+
+  .contact-item {
+    text-align: center;
+  }
+
+  .contact-item-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--mist);
+    margin-bottom: 8px;
+  }
+
+  .contact-item-value {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 20px;
+    font-style: italic;
+    color: var(--cream);
+  }
+
+  /* FOOTER */
+  footer {
+    background: #000000;
+    padding: 32px clamp(24px, 8vw, 120px);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid rgba(255,255,255,0.05);
+  }
+
+  footer span {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    color: rgba(138,128,112,0.4);
+  }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 768px) {
+    .about { grid-template-columns: 1fr; gap: 48px; }
+    .featured-grid { grid-template-columns: 1fr; gap: 40px; }
+    .project { grid-template-columns: 48px 1fr; }
+    .project-roles { display: none; }
+    .nav-links { display: none; }
+    .filmstrip { display: none; }
+    .contact-info { gap: 32px; }
+    footer { flex-direction: column; gap: 12px; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+
+  <div class="filmstrip">
+    <span></span><span></span><span></span><span></span><span></span>
+    <span></span><span></span><span></span><span></span><span></span>
+    <span></span><span></span><span></span><span></span><span></span>
+    <span></span><span></span><span></span><span></span><span></span>
+    <span></span><span></span><span></span><span></span><span></span>
+    <span></span><span></span><span></span><span></span><span></span>
+  </div>
+
+  <nav class="nav">
+    <div class="nav-logo">Sammy Linn</div>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#work">Work</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <div class="hero-content">
+    <div class="hero-eyebrow">Filmmaker & Creative Director</div>
+    <h1 class="hero-name">
+      Sammy
+      <span>Linn</span>
+    </h1>
+    <div class="hero-roles">
+      <span class="role-tag">Director</span>
+      <span class="role-tag">VFX Producer</span>
+      <span class="role-tag">Editor</span>
+      <span class="role-tag">Writer</span>
+      <span class="role-tag">Art Director</span>
+      <span class="role-tag">Producer</span>
+    </div>
+  </div>
+
+  <div class="hero-scroll">
+    <div class="scroll-line"></div>
+    Scroll to explore
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="about-stat-block reveal">
+    <p class="about-label">By the numbers</p>
+    <div class="stat">
+      <div class="stat-number">7+</div>
+      <div class="stat-label">Years in production</div>
+    </div>
+    <div class="stat">
+      <div class="stat-number">7</div>
+      <div class="stat-label">European countries showcased</div>
+    </div>
+    <div class="stat">
+      <div class="stat-number">10</div>
+      <div class="stat-label">Full-time team members</div>
+    </div>
+    <div class="stat">
+      <div class="stat-number">3</div>
+      <div class="stat-label">Languages spoken</div>
+    </div>
+  </div>
+
+  <div class="about-text reveal">
+    <p class="about-label">About</p>
+    <h2>A storyteller who builds worlds from imagination and innovation.</h2>
+    <p>
+      Sein Lin — known professionally as Sammy Linn — is a passionate filmmaker and creative director
+      based in Myanmar. As Co-Founder and Creative Director of Aliens Productions since 2018, he has
+      led the company from a three-person startup to a full creative studio, working with global brands
+      like Lenovo, Telenor, and Unilever.
+    </p>
+    <p>
+      His versatility spans directing, writing, VFX supervision, editing, and production management —
+      delivering projects that push the boundaries of visual storytelling in the Myanmar film and television
+      industry.
+    </p>
+    <div class="langs">
+      <span class="lang">English</span>
+      <span class="lang">Hindi</span>
+      <span class="lang">Burmese</span>
+    </div>
+  </div>
+</section>
+
+<!-- WORK -->
+<section class="work" id="work">
+  <div class="section-header reveal">
+    <h2 class="section-title">Selected Work</h2>
+    <span class="section-count">06 Projects</span>
+  </div>
+
+  <!-- FEATURED: CRYING FOREST -->
+  <div class="featured reveal">
+    <p class="section-count">01 — Featured</p>
+    <div class="featured-grid">
+      <div>
+        <h3 class="featured-title">Crying Forest</h3>
+        <p class="featured-subtitle">TV Series · Canal Plus Myanmar / Taurus V Production · 2019–2022</p>
+        <p class="featured-desc">
+          An original adventure-thriller-horror-sci-fi series — the first of its kind for Myanmar audiences.
+          Written and pitched by Sammy Linn, the series became a landmark production, distributed across
+          seven European countries and Cambodia.
+        </p>
+        <div class="award-block">
+          <p class="award-label">Recognition</p>
+          <p class="award-text">Nominated — Best International Thriller Series<br>Asia Cinema Awards 2023</p>
+        </div>
+      </div>
+      <div>
+        <p class="about-label" style="margin-bottom: 20px;">Roles on this project</p>
+        <ul class="facts-list">
+          <li>Writer (contractual) · 2019–2020</li>
+          <li>Assistant Director (contractual) · Nov 2021–2022</li>
+          <li>VFX Supervisor / Producer (contractual) · Nov 2021–2022</li>
+          <li>First Myanmar series in 7 European countries + Cambodia</li>
+          <li>Created mythical creature "Minza" — CGI with hair & cloth sim</li>
+          <li>Animated opening credits from on-set photography</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="projects-grid">
+    <div class="project reveal">
+      <div class="project-num">02</div>
+      <div>
+        <h3 class="project-title">You May Be the Light</h3>
+        <div class="project-meta">
+          <span class="project-type">Short Film</span>
+          <span class="project-year">Sep – Nov 2024 · American Center Yangon</span>
+        </div>
+        <p class="project-desc">
+          A 40-minute narrative film on self-love and authenticity, grant-supported by ACY. Premiered to
+          250+ attendees with a sold-out post-screening discussion. Cast entirely with first-time actors.
+        </p>
+      </div>
+      <div class="project-roles">
+        <span class="project-role">Writer</span>
+        <span class="project-role">Director</span>
+        <span class="project-role">Producer</span>
+      </div>
+    </div>
+
+    <div class="project reveal">
+      <div class="project-num">03</div>
+      <div>
+        <h3 class="project-title">If My Lover Were a Flower</h3>
+        <div class="project-meta">
+          <span class="project-type">Feature Film</span>
+          <span class="project-year">2019–2024 · Taurus V Production</span>
+        </div>
+        <p class="project-desc">
+          Served as VFX Producer, integrating CGI with live-action footage. Managed budget constraints
+          while achieving high-quality realistic visual effects for the feature.
+        </p>
+      </div>
+      <div class="project-roles">
+        <span class="project-role">VFX Producer</span>
+      </div>
+    </div>
+
+    <div class="project reveal">
+      <div class="project-num">04</div>
+      <div>
+        <h3 class="project-title">Magic Envelope</h3>
+        <div class="project-meta">
+          <span class="project-type">TV Series</span>
+          <span class="project-year">2019–2024 · Taurus V Production</span>
+        </div>
+        <p class="project-desc">
+          Dual role as Assistant Director and VFX Producer on a multi-timeline series. Coordinated
+          cross-department logistics and maximized CGI impact with highly limited budget.
+        </p>
+      </div>
+      <div class="project-roles">
+        <span class="project-role">Assistant Director</span>
+        <span class="project-role">VFX Producer</span>
+      </div>
+    </div>
+
+    <div class="project reveal">
+      <div class="project-num">05</div>
+      <div>
+        <h3 class="project-title">Peh Tenta (Echo)</h3>
+        <div class="project-meta">
+          <span class="project-type">Feature Film</span>
+          <span class="project-year">Mar – May 2025 · Taurus V Production (Ongoing)</span>
+        </div>
+        <p class="project-desc">
+          Currently serving as Film Consultant, shaping the overall creative vision, refining screenplay
+          and dialogue, and guiding VFX and special effects makeup decisions.
+        </p>
+      </div>
+      <div class="project-roles">
+        <span class="project-role">Film Consultant</span>
+      </div>
+    </div>
+
+    <div class="project reveal">
+      <div class="project-num">06</div>
+      <div>
+        <h3 class="project-title">Filmmaking Workshop</h3>
+        <div class="project-meta">
+          <span class="project-type">Education / Workshop</span>
+          <span class="project-year">Nov – Dec 2024 · American Center Yangon</span>
+        </div>
+        <p class="project-desc">
+          Led a two-day hands-on filmmaking workshop for 30 aspiring filmmakers. Covered visual
+          storytelling, cinematography, directing, and post-production. Resulting short film screened
+          to 150+ live attendees.
+        </p>
+      </div>
+      <div class="project-roles">
+        <span class="project-role">Facilitator</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section class="skills" id="skills">
+  <div class="section-header reveal">
+    <h2 class="section-title">Expertise</h2>
+    <span class="section-count">Core Skills</span>
+  </div>
+  <div class="skills-grid">
+    <div class="skill-card reveal">
+      <div class="skill-icon">D</div>
+      <div class="skill-name">Directing</div>
+      <div class="skill-desc">Full creative leadership from script to screen — tone, performance, cinematography, and pacing.</div>
+    </div>
+    <div class="skill-card reveal">
+      <div class="skill-icon">V</div>
+      <div class="skill-name">VFX Production</div>
+      <div class="skill-desc">CGI supervision, compositing, creature design, and delivering visual effects to international standards.</div>
+    </div>
+    <div class="skill-card reveal">
+      <div class="skill-icon">E</div>
+      <div class="skill-name">Editing</div>
+      <div class="skill-desc">Story-driven post-production including cut, rhythm, color grading, and narrative structure.</div>
+    </div>
+    <div class="skill-card reveal">
+      <div class="skill-icon">W</div>
+      <div class="skill-name">Writing</div>
+      <div class="skill-desc">Original screenplays across genres — thriller, sci-fi, horror, drama. Developed for TV series and short film.</div>
+    </div>
+    <div class="skill-card reveal">
+      <div class="skill-icon">P</div>
+      <div class="skill-name">Production</div>
+      <div class="skill-desc">Full production oversight, crisis management, logistics, and team leadership across large-scale shoots.</div>
+    </div>
+    <div class="skill-card reveal">
+      <div class="skill-icon">A</div>
+      <div class="skill-name">Art Direction</div>
+      <div class="skill-desc">Visual identity, set design, motion graphics, and cohesive aesthetic vision across all departments.</div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <p class="contact-eyebrow">Get in touch</p>
+  <h2>Let's Make<br>Something<br>Unforgettable.</h2>
+  <div class="contact-info reveal">
+    <div class="contact-item">
+      <div class="contact-item-label">Company</div>
+      <div class="contact-item-value">Aliens Productions</div>
+    </div>
+    <div class="contact-item">
+      <div class="contact-item-label">Based in</div>
+      <div class="contact-item-value">Myanmar</div>
+    </div>
+    <div class="contact-item">
+      <div class="contact-item-label">Education</div>
+      <div class="contact-item-value">BA English</div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span>© 2025 Sammy Linn — Aliens Productions</span>
+  <span>Director · VFX Producer · Writer · Editor · Producer</span>
+</footer>
+
+<script>
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => {
+          entry.target.classList.add('visible');
+        }, 100);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12 });
+
+  reveals.forEach(el => observer.observe(el));
+
+  // Stagger sibling reveals
+  document.querySelectorAll('.projects-grid, .skills-grid').forEach(grid => {
+    grid.querySelectorAll('.reveal').forEach((el, i) => {
+      el.style.transitionDelay = `${i * 0.08}s`;
+    });
+  });
+</script>
+</body>
+</html>
